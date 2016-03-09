@@ -17,6 +17,7 @@ module AvatarMagick
         color       = opts[:color] ? "##{opts[:color]}" : content.env[:avatar_magick][:color]
         size        = opts[:size] || content.env[:avatar_magick][:size]
         font        = opts[:font] || content.env[:avatar_magick][:font]
+        annotate    = opts[:annotate] || content.env[:avatar_magick][:annotate]
 
         # extract the first letter of the first 3 words and capitalize
         text = (string.split(/\s/)- ["", nil]).map { |t| t[0].upcase }.slice(0, 3).join('')
@@ -41,7 +42,7 @@ module AvatarMagick
         args = args.slice(0, args.length - 2)
         args.push("-size #{w}x#{h}")
         args.push("xc:#{background}")
-        args.push("-annotate 0x0 #{text}")
+        args.push("-annotate #{annotate} #{text}")
 
         content.generate!(:convert, args.join(' '), format)
 
